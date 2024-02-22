@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio 2</title>
+</head>
+
+<style>
+  .hiden{
+    display: none;
+  }
+</style>
+<body>
+  <h2>Ejercicio 2</h2>
+
+  <label for="number">Indica el tiempo para la cuenta atras</label>
+  <input type="number" id="time">
+
+  <p>
+    <button onclick="start()" name="start">Iniciar Temporizador</button>
+    <button onclick="stop()" name="stop">Detener Temporizador</button>
+  </p>
+  <p>
+    <input type="checkbox" name="repeat" onclick="toggleRepeat()">
+    <label for="repeat"  id="repeat">Repetir</label>
+  </p>
+  
+  <p id="countdown"></p>
+  <div id="stars"></div>
+</body>
+
+<script>
+  let interval;
+  let time;
+  let repeat;
+  let buttonStart = document.getElementsByName("start")[0];
+  let buttonStop = document.getElementsByName("stop")[0];
+  let div = document.getElementById("stars");
+  let stars = Array(time).fill("*");
+  function start(){
+
+    buttonStart.setAttribute("disabled", "");
+    buttonStop.removeAttribute("disabled");
+
+    console.log(stars);
+
+    stars.forEach((star, index) => {
+      let span = document.createElement("span");
+      span.innerText = star;
+      div.append(span);
+    })
+
+
+  if (!interval) {
+    time = parseInt(document.getElementById("time").value);
+    let timeOriginal = time;
+    let countdown = document.getElementById("countdown");
+
+    interval = setInterval(function() {
+      if (time <= 0) {
+        if(repeat == true){
+          time = timeOriginal;
+        } else {
+          clearInterval(interval);
+          countdown.innerHTML = "¡Tiempo terminado!";
+        }
+      } else {
+        countdown.innerHTML = "Tiempo restante: " + time + " segundos";
+        time--;
+          // let span = document.createElement("span");
+          // span.innerText = "*";
+          // div.append(span);
+          // let star = document.querySelector["stars"][0];
+          // div.removeChild(star);
+      }
+    }, 1000);
+
+    
+  }
+}
+
+
+  function stop(){
+    buttonStop.setAttribute("disabled", "");
+    buttonStart.removeAttribute("disabled");
+    clearInterval(interval);
+    interval = null;
+    document.getElementById("countdown").innerHTML = "Temporizador detenido";
+    
+  }
+  function toggleRepeat(){
+    repeat = true;
+  }
+
+
+
+  
+</script>
+</html>
